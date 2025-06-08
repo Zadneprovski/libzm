@@ -13,10 +13,7 @@ extern "C" {
 
 	extern __IO uint32_t sysTicks;
 
-	 __STATIC_FORCEINLINE void incrementSysTick()
-	 {
-	   sysTicks += 1;
-	 }
+	void sysTickInterrupt();
 
 	 __STATIC_FORCEINLINE uint32_t getSysTick()
 	 {

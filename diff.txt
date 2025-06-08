@@ -1,0 +1,12 @@
+diff --git a/inc/clock.h b/inc/clock.h
+index 931de6c..40b5387 100644
+--- a/inc/clock.h
++++ b/inc/clock.h
+@@ -12,6 +12,7 @@ extern "C" {
+ #endif
+ 
+ 	extern __IO uint32_t sysTicks;
++	extern __IO uint32_t sysTicksss;
+ 
+ 	 __STATIC_FORCEINLINE void incrementSysTick()
+ 	 {
