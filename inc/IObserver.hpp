@@ -1,27 +1,26 @@
 #ifndef LIBZM_INC_IOBSERVER_HPP_
 #define LIBZM_INC_IOBSERVER_HPP_
 
-struct ISubject;
+class ISubject;
 
 struct IObserverBase {
     using Notification = void (*)(ISubject*, IObserverBase*, int);
 
-    IObserverBase* next = nullptr;
     Notification notification_ = nullptr;
 
     void notify(ISubject* subject, int value) {
-    	notification_(subject, this, value);
+        notification_(subject, this, value);
     }
 
-    constexpr IObserverBase(Notification notification) : notification_(notification){}
+    constexpr IObserverBase(Notification notification) : notification_(notification) {}
 };
 
 template<typename T>
 struct IObserver : IObserverBase {
     IObserver()
         : IObserverBase([](ISubject* subject, IObserverBase* observer, int value) {
-            static_cast<T*>(observer)->onNotify(subject, value);
-        }) {}
+        static_cast<T*>(observer)->onNotify(subject, value);
+            }) {}
 };
 
 class MyObserver1 : public IObserver<MyObserver1> {

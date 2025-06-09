@@ -1,37 +1,39 @@
 #ifndef LIBZM_INC_ISUBJECT_HPP_
 #define LIBZM_INC_ISUBJECT_HPP_
 
+#include <forward_list>
 #include "IObserver.hpp"
 
 class ISubject {
 private:
-	IObserverBase* head = nullptr;
+    std::forward_list<IObserverBase*> observers;
 
 public:
-    void addObserver(IObserverBase& observer) {
-        if (head == nullptr) {
-            head = &observer;
-        } else {
-        	IObserverBase* current = head;
-            while (current->next != nullptr) {
-                current = current->next;
-            }
-            current->next = &observer;
-        }
+    template<typename T>
+    void addObserver(T& observer) {
+        static_assert(std::is_base_of<IObserverBase, T>::value,
+            "Observer must derive from IObserverBase");
+        observers.push_front(static_cast<IObserverBase*>(&observer));
     }
 
-    void notify(int value) {
-    	IObserverBase* current = head;
-        while (current != nullptr) {
-            current->notify(this, value);
-            current = current->next;
-        }
+    void notifyAll(int value) {
+        for (auto observer : observers)
+            observer->notify(this, value);
     }
 };
 
 class MySubject : public ISubject
 {
 
+};
+
+
+class MySubject2 : public ISubject, public IObserver<MySubject2>
+{
+public:
+    void onNotify(ISubject* subject, int value) {
+    	libzm::trace("MySubject2");
+    }
 };
 
 #endif /* LIBZM_INC_ISUBJECT_HPP_ */
