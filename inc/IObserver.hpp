@@ -23,18 +23,6 @@ struct IObserver : IObserverBase {
             }) {}
 };
 
-class MyObserver1 : public IObserver<MyObserver1> {
-public:
-    void onNotify(ISubject* subject,int value) {
-    	libzm::trace("MyObserver1");
-    }
-};
 
-class MyObserver2 : public IObserver<MyObserver2> {
-public:
-    void onNotify(ISubject* subject, int value) {
-    	libzm::trace("MyObserver2");
-    }
-};
 
 #endif /* LIBZM_INC_IOBSERVER_HPP_ */

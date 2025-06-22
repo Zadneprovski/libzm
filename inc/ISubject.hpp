@@ -22,18 +22,4 @@ public:
     }
 };
 
-class MySubject : public ISubject
-{
-
-};
-
-
-class MySubject2 : public ISubject, public IObserver<MySubject2>
-{
-public:
-    void onNotify(ISubject* subject, int value) {
-    	libzm::trace("MySubject2");
-    }
-};
-
 #endif /* LIBZM_INC_ISUBJECT_HPP_ */
